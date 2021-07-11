@@ -26,7 +26,7 @@ const Paginate: React.FC<Props> = (props: Props) => {
             key={p}
             className={'page-item ' + (p === currentPage ? 'active' : '')}
           >
-            <a onClick={() => onPageChange(p)} className='page-link'>
+            <a onClick={() => onPageChange(p)} className='page-link' href='/#'>
               {p}
             </a>
           </li>
