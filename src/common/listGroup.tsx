@@ -6,7 +6,7 @@ export interface Props {
   onItemSelect: (genre: string) => void;
 }
 
-const ListGroup: React.FC<Props> = (props: Props) => {
+const ListGroup: React.FC<Props> = (props) => {
   const {
     onItemSelect,
     items,
@@ -22,8 +22,8 @@ const ListGroup: React.FC<Props> = (props: Props) => {
           key={item[idProperty]}
           className={
             selectedGenre === item
-              ? 'list-group-item active'
-              : 'list-group-item'
+              ? 'list-group-item active clickable'
+              : 'list-group-item clickable'
           }
           onClick={() => onItemSelect(item)}
         >

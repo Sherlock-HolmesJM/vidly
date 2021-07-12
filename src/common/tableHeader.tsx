@@ -5,9 +5,11 @@ export type SortColumn = {
   order: string;
 };
 
-type Column = {
+export type Column = {
   path?: string;
   label?: string;
+  key?: string;
+  content?: (item: any) => void;
 };
 
 export interface TableHeaderProps {
@@ -29,13 +31,25 @@ class TableHeader extends React.Component<TableHeaderProps, TableHeaderState> {
     this.props.onSort(sortColumn);
   };
 
+  renderSortIcon = (column) => {
+    const { sortColumn } = this.props;
+
+    if (column.path !== sortColumn.path) return null;
+    if (sortColumn.order === 'asc') return <i className='fa fa-sort-asc'></i>;
+    return <i className='fa fa-sort-desc'></i>;
+  };
+
   render() {
     return (
       <thead>
         <tr>
-          {this.props.columns.map((column, index) => (
-            <th key={index} onClick={() => this.raiseSort(column.path)}>
-              {column.label}
+          {this.props.columns.map((column) => (
+            <th
+              key={column.path || column.key}
+              className='clickable'
+              onClick={() => this.raiseSort(column.path)}
+            >
+              {column.label} {this.renderSortIcon(column)}
             </th>
           ))}
         </tr>

@@ -3,9 +3,7 @@ export interface Props {
   onClick: () => void;
 }
 
-const Like: React.FC<Props> = (props: Props) => {
-  const { liked, onClick } = props;
-
+const Like: React.FC<Props> = ({ liked, onClick }) => {
   const classes = 'fa fa-heart' + (liked ? '' : '-o');
   return (
     <i

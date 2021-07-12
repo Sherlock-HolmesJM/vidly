@@ -11,7 +11,7 @@ const range = (limit: number) => {
   return range;
 };
 
-const Paginate: React.FC<Props> = (props: Props) => {
+const Paginate: React.FC<Props> = (props) => {
   const { itemsCount, pageSize, onPageChange, currentPage } = props;
 
   const pagesCount = Math.ceil(itemsCount / pageSize);
