@@ -14,7 +14,7 @@ export interface Movie {
 
 const movies: Movie[] = [
   {
-    _id: getID() + '',
+    _id: getID(),
     title: 'Terminator',
     genre: { _id: getGenreID('Action'), name: 'Action' },
     numberInStock: 6,
@@ -23,7 +23,7 @@ const movies: Movie[] = [
     liked: false,
   },
   {
-    _id: getID() + '',
+    _id: getID(),
     title: 'Die Hard',
     genre: { _id: getGenreID('Action'), name: 'Action' },
     numberInStock: 5,
@@ -32,7 +32,7 @@ const movies: Movie[] = [
     liked: false,
   },
   {
-    _id: getID() + '',
+    _id: getID(),
     title: 'Get Out',
     genre: { _id: getGenreID('Thriller'), name: 'Thriller' },
     numberInStock: 8,
@@ -41,7 +41,7 @@ const movies: Movie[] = [
     liked: false,
   },
   {
-    _id: getID() + '',
+    _id: getID(),
     title: 'Trip to Italy',
     genre: { _id: getGenreID('Comedy'), name: 'Comedy' },
     numberInStock: 7,
@@ -50,7 +50,7 @@ const movies: Movie[] = [
     liked: true,
   },
   {
-    _id: getID() + '',
+    _id: getID(),
     title: 'Airplane',
     genre: { _id: getGenreID('Comedy'), name: 'Comedy' },
     numberInStock: 7,
@@ -59,7 +59,7 @@ const movies: Movie[] = [
     liked: false,
   },
   {
-    _id: getID() + '',
+    _id: getID(),
     title: 'Wedding Crashers',
     genre: { _id: getGenreID('Comedy'), name: 'Comedy' },
     numberInStock: 7,
@@ -68,7 +68,7 @@ const movies: Movie[] = [
     liked: false,
   },
   {
-    _id: getID() + '',
+    _id: getID(),
     title: 'Gone Girl',
     genre: { _id: getGenreID('Thriller'), name: 'Thriller' },
     numberInStock: 7,
@@ -77,7 +77,7 @@ const movies: Movie[] = [
     liked: true,
   },
   {
-    _id: getID() + '',
+    _id: getID(),
     title: 'The Sixth Sense',
     genre: { _id: getGenreID('Thriller'), name: 'Thriller' },
     numberInStock: 4,
@@ -86,7 +86,7 @@ const movies: Movie[] = [
     liked: false,
   },
   {
-    _id: getID() + '',
+    _id: getID(),
     title: 'The Avengers',
     genre: { _id: getGenreID('Action'), name: 'Action' },
     numberInStock: 7,

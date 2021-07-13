@@ -2,10 +2,10 @@ import TableBody from './tableBody';
 import TableHeader, { Column, SortColumn } from './tableHeader';
 
 export interface TableProps {
+  data: any;
   columns: Column[];
   sortColumn: SortColumn;
   onSort: (sortColumn: SortColumn) => void;
-  data: any;
 }
 
 const Table: React.FC<TableProps> = ({ columns, sortColumn, data, onSort }) => {

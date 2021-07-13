@@ -1,12 +1,12 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { getMovies, Movie } from '../services/fakeMovieService';
 import { getGenres } from '../services/fakeGenreService';
-import Pagination from '../common/pagination';
+import Pagination from './common/pagination';
 import { paginate } from '../utils/paginate';
 import { sort } from '../utils/sort';
-import ListGroup from '../common/listGroup';
+import ListGroup from './common/listGroup';
 import MoviesTable from './moviesTable';
-import { SortColumn } from '../common/tableHeader';
+import { SortColumn } from './common/tableHeader';
 
 export interface Props {}
 
@@ -81,9 +81,9 @@ class Movies extends Component<Props, State> {
   };
 
   render() {
+    const { length: count } = this.state.movies;
     const { pageSize, currentPage, genres, selectedGenre, sortColumn } =
       this.state;
-    const { length: count } = this.state.movies;
 
     if (count === 0) return <p>There are no movies in the database.</p>;
 

@@ -1,8 +1,9 @@
 import React from 'react';
 import { Movie } from '../services/fakeMovieService';
-import Like from '../common/like';
-import { SortColumn } from '../common/tableHeader';
-import Table from '../common/table';
+import Like from './common/like';
+import { SortColumn } from './common/tableHeader';
+import Table from './common/table';
+import { Link } from 'react-router-dom';
 
 export interface MoviesTableProps {
   movies: Movie[];
@@ -14,16 +15,24 @@ export interface MoviesTableProps {
 
 class MoviesTable extends React.Component<MoviesTableProps> {
   columns = [
-    { path: 'title', label: 'Title' },
+    {
+      path: 'title',
+      label: 'Title',
+      content: (movie: Movie) => (
+        <Link to={`/movies/${movie._id}`}>{movie.title}</Link>
+      ),
+    },
     { path: 'genre.name', label: 'Genre' },
     { path: 'numberInStock', label: 'Stock' },
     { path: 'dailyRentalRate', label: 'Rate' },
     {
+      key: 'like',
       content: (movie: Movie) => (
         <Like liked={movie.liked} onClick={() => this.props.onLike(movie)} />
       ),
     },
     {
+      key: 'delete',
       content: (movie: Movie) => (
         <button
           onClick={() => this.props.onDelete(movie)}

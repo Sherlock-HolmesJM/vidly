@@ -5,8 +5,8 @@ export interface Props {
   onPageChange: (page: number) => void;
 }
 
-const range = (limit: number) => {
-  const range = [...new Array(limit + 1).keys()];
+const range = (limit: number, start = 1) => {
+  const range = [...new Array(limit + start).keys()];
   range.splice(0, 1);
   return range;
 };
@@ -24,11 +24,11 @@ const Paginate: React.FC<Props> = (props) => {
         {pages.map((p) => (
           <li
             key={p}
-            className={'page-item ' + (p === currentPage ? 'active' : '')}
+            className={'page-item' + (p === currentPage ? ' active' : '')}
           >
-            <a onClick={() => onPageChange(p)} className='page-link' href='/#'>
+            <button onClick={() => onPageChange(p)} className='page-link'>
               {p}
-            </a>
+            </button>
           </li>
         ))}
       </ul>
