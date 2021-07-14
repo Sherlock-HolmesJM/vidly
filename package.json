@@ -13,6 +13,7 @@
     "bootstrap": "^4.6.0",
     "contentful-management": "^7.27.1",
     "font-awesome": "^4.7.0",
+    "joi-browser": "13.4",
     "query-string": "^6.1.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
