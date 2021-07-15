@@ -8,6 +8,7 @@ import Customers from "./components/customers";
 import Rentals from "./components/rentals";
 import NotFound from "./components/notFound";
 import LoginForm from "./components/loginForm";
+import RegisterForm from "./components/registerForm";
 
 function App() {
   const navLinkItems = [
@@ -15,6 +16,7 @@ function App() {
     { path: "customers", label: "Customers" },
     { path: "rentals", label: "Rentals" },
     { path: "login", label: "Login" },
+    { path: "register", label: "Register" },
   ];
 
   return (
@@ -25,6 +27,7 @@ function App() {
           <Route path="/movies/:id" exact component={MovieForm} />
           <Route path="/movies" component={Movies} />
           <Route path="/login" component={LoginForm} />
+          <Route path="/register" component={RegisterForm} />
           <Route path="/customers" component={Customers} />
           <Route path="/rentals" component={Rentals} />
           <Route path="/not-found" component={NotFound} />
