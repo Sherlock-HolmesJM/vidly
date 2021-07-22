@@ -11,7 +11,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ value, onChange }) => {
       className="form-control my-3"
       placeholder="Search..."
       value={value}
-      onChange={(e) => onChange(e.currentTarget.value.trim())}
+      onChange={(e) => onChange(e.currentTarget.value)}
     />
   );
 };

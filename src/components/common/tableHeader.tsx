@@ -1,16 +1,6 @@
-import React from 'react';
-
-export type SortColumn = {
-  path: string;
-  order: string;
-};
-
-export type Column = {
-  path?: string;
-  label?: string;
-  key?: string;
-  content?: (item: any) => void;
-};
+import React from "react";
+import SortColumn from "../../types/sortColumn";
+import Column from "../../types/column";
 
 export interface TableHeaderProps {
   columns: Column[];
@@ -25,8 +15,8 @@ class TableHeader extends React.Component<TableHeaderProps, TableHeaderState> {
     let sortColumn = { ...this.props.sortColumn };
 
     if (sortColumn.path === path)
-      sortColumn.order = sortColumn.order === 'asc' ? 'des' : 'asc';
-    else sortColumn = { path, order: 'asc' };
+      sortColumn.order = sortColumn.order === "asc" ? "desc" : "asc";
+    else sortColumn = { path, order: "asc" };
 
     this.props.onSort(sortColumn);
   };
@@ -35,8 +25,8 @@ class TableHeader extends React.Component<TableHeaderProps, TableHeaderState> {
     const { sortColumn } = this.props;
 
     if (column.path !== sortColumn.path) return null;
-    if (sortColumn.order === 'asc') return <i className='fa fa-sort-asc'></i>;
-    return <i className='fa fa-sort-desc'></i>;
+    if (sortColumn.order === "asc") return <i className="fa fa-sort-asc"></i>;
+    return <i className="fa fa-sort-desc"></i>;
   };
 
   render() {
@@ -46,7 +36,7 @@ class TableHeader extends React.Component<TableHeaderProps, TableHeaderState> {
           {this.props.columns.map((column) => (
             <th
               key={column.path || column.key}
-              className='clickable'
+              className="clickable"
               onClick={() => this.raiseSort(column.path)}
             >
               {column.label} {this.renderSortIcon(column)}

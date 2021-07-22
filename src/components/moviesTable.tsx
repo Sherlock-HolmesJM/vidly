@@ -1,9 +1,9 @@
-import React from 'react';
-import { Movie } from '../services/fakeMovieService';
-import Like from './common/like';
-import { SortColumn } from './common/tableHeader';
-import Table from './common/table';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
+import SortColumn from "../types/sortColumn";
+import Movie from "../types/movie";
+import Like from "./common/like";
+import Table from "./common/table";
 
 export interface MoviesTableProps {
   movies: Movie[];
@@ -16,27 +16,27 @@ export interface MoviesTableProps {
 class MoviesTable extends React.Component<MoviesTableProps> {
   columns = [
     {
-      path: 'title',
-      label: 'Title',
+      path: "title",
+      label: "Title",
       content: (movie: Movie) => (
         <Link to={`/movies/${movie._id}`}>{movie.title}</Link>
       ),
     },
-    { path: 'genre.name', label: 'Genre' },
-    { path: 'numberInStock', label: 'Stock' },
-    { path: 'dailyRentalRate', label: 'Rate' },
+    { path: "genre.name", label: "Genre" },
+    { path: "numberInStock", label: "Stock" },
+    { path: "dailyRentalRate", label: "Rate" },
     {
-      key: 'like',
+      key: "like",
       content: (movie: Movie) => (
         <Like liked={movie.liked} onClick={() => this.props.onLike(movie)} />
       ),
     },
     {
-      key: 'delete',
+      key: "delete",
       content: (movie: Movie) => (
         <button
           onClick={() => this.props.onDelete(movie)}
-          className='btn btn-danger btn-sm'
+          className="btn btn-danger btn-sm"
         >
           Delete
         </button>

@@ -1,6 +1,7 @@
-import Joi from "joi-browser";
-import { getGenres } from "../services/fakeGenreService";
-import { Movie, getMovie, saveMovie } from "../services/fakeMovieService";
+import Joi from "joi";
+import { getGenres } from "../services/genreService";
+import { getMovie, saveMovie } from "../services/movieService";
+import Movie from "../types/movie";
 import Form from "./common/form";
 
 export interface MovieFormProps {
@@ -9,12 +10,19 @@ export interface MovieFormProps {
 
 class MovieForm extends Form {
   state = {
-    data: { title: "", dailyRentalRate: "", numberInStock: "", genreId: "" },
+    data: {
+      _id: "new",
+      title: "",
+      dailyRentalRate: "",
+      numberInStock: "",
+      genreId: "",
+    },
     genres: [],
     errors: {},
   };
 
   schema = {
+    _id: Joi.string(),
     title: Joi.string().required().label("Title"),
     genreId: Joi.string().required().label("Genre"),
     dailyRentalRate: Joi.number().min(0).max(10).required().label("Rate"),
@@ -26,30 +34,39 @@ class MovieForm extends Form {
   };
 
   componentDidMount() {
-    const genres = getGenres();
-
-    const movieId = this.props.match.params.id;
-    if (movieId === "new") return this.setState({ genres });
-
-    const movie = getMovie(movieId);
-    if (!movie) return this.props.history.replace("/not-found");
-
-    this.setState({ data: this.mapToViewModel(movie), genres });
+    this.populateGenres();
+    this.populateMovie();
   }
 
-  mapToViewModel({ title, dailyRentalRate, numberInStock, genre }: Movie) {
-    return { title, dailyRentalRate, numberInStock, genreId: genre._id };
+  async populateGenres() {
+    const { data: genres } = await getGenres();
+    this.setState({ genres });
+  }
+
+  async populateMovie() {
+    try {
+      const movieId = this.props.match.params.id;
+      if (movieId === "new") return;
+
+      const { data: movie } = await getMovie(movieId);
+      this.setState({ data: this.mapToViewModel(movie) });
+    } catch (e) {
+      if (e.response && e.response.status === 404)
+        this.props.history.replace("/not-found");
+    }
+  }
+
+  mapToViewModel({ _id, title, dailyRentalRate, numberInStock, genre }: Movie) {
+    return { _id, title, dailyRentalRate, numberInStock, genreId: genre._id };
   }
 
   mapToOptionModel({ _id, name }) {
     return { value: _id, label: name };
   }
 
-  doSubmit() {
-    const { data, genres } = this.state;
-    const genre = genres.find((genre) => genre._id === data.genreId);
-    const obj = { ...data, genre };
-    saveMovie(obj as any);
+  async doSubmit() {
+    await saveMovie(this.state.data);
+
     this.props.history.replace("/movies");
   }
 

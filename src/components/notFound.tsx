@@ -1,8 +1,6 @@
 export interface NotFoundProps {}
 
-export interface NotFoundState {}
-
-const NotFound: React.SFC<NotFoundProps> = () => {
+const NotFound: React.FC<NotFoundProps> = () => {
   return <h1>Not Found</h1>;
 };
 

@@ -1,10 +1,11 @@
-import Joi from "joi-browser";
+import Joi from "joi";
 import Form from "./common/form";
+import auth from "../services/authService";
 
 class LoginForm extends Form {
   state = {
     data: { username: "", password: "" },
-    errors: {},
+    errors: { username: "" },
   };
 
   schema = {
@@ -12,9 +13,15 @@ class LoginForm extends Form {
     password: Joi.string().required().label("Password"),
   };
 
-  doSubmit = () => {
-    // Call server
-    console.log("Submitted");
+  doSubmit = async () => {
+    try {
+      const { username, password } = this.state.data;
+      await auth.login(username, password);
+      window.location.href = "/";
+    } catch (e) {
+      if (e.response && e.response.status === 400)
+        this.setErrorProperty("username", e.response.data);
+    }
   };
 
   render() {

@@ -1,5 +1,5 @@
 import React from "react";
-import Joi from "joi-browser";
+import Joi from "joi";
 import { RouteComponentProps } from "react-router-dom";
 import Input from "./input";
 import Select from "./select";
@@ -59,6 +59,12 @@ class Form extends React.Component<RouteComponentProps, FormState> {
   };
 
   doSubmit() {}
+
+  setErrorProperty(property: string, message) {
+    const errors = { ...this.state.errors };
+    errors[property] = message;
+    this.setState({ errors });
+  }
 
   renderButton(label) {
     return (

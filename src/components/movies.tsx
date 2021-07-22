@@ -1,30 +1,31 @@
 import { Component } from "react";
+import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
-import { deleteMovie, getMovies, Movie } from "../services/fakeMovieService";
-import { getGenres } from "../services/fakeGenreService";
+import SortColumn from "../types/sortColumn";
+import Movie from "../types/movie";
+import Genre from "../types/genre";
+import MoviesTable from "./moviesTable";
+import ListGroup from "./common/listGroup";
 import Pagination from "./common/pagination";
+import SearchBox from "./common/searchBox";
+import { deleteMovie, getMovies } from "../services/movieService";
+import { getGenres } from "../services/genreService";
 import { paginate } from "../utils/paginate";
 import { sort } from "../utils/sort";
-import ListGroup from "./common/listGroup";
-import MoviesTable from "./moviesTable";
-import { SortColumn } from "./common/tableHeader";
-import SearchBox from "./common/searchBox";
-
-export interface Props {}
 
 export interface State {
   movies: Movie[];
-  genres: any[];
+  genres: Genre[];
   pageSize: number;
   currentPage: number;
-  selectedGenre: any;
-  sortColumn: any;
+  selectedGenre: Genre;
+  sortColumn: SortColumn;
   searchQuery: string;
 }
 
-class Movies extends Component<Props, State> {
+class Movies extends Component<any, State> {
   state = {
-    movies: [] as Movie[],
+    movies: [],
     genres: [],
     pageSize: 4,
     currentPage: 1,
@@ -33,15 +34,29 @@ class Movies extends Component<Props, State> {
     searchQuery: "",
   };
 
-  componentDidMount() {
-    const genres = [this.state.selectedGenre, ...getGenres()];
+  async componentDidMount() {
+    const { data } = await getGenres();
+    const { data: movies } = await getMovies();
 
-    this.setState({ movies: getMovies(), genres });
+    this.setState({
+      movies,
+      genres: [this.state.selectedGenre, ...data],
+    });
   }
 
-  handleDelete = (movie: Movie) => {
-    const movies = deleteMovie(movie);
+  handleDelete = async (movie) => {
+    const originalMovies = this.state.movies;
+    const movies = originalMovies.filter((m) => m._id !== movie._id);
     this.setState({ movies });
+
+    try {
+      await deleteMovie(movie._id);
+    } catch (e) {
+      if (e.response && e.response.status === 404)
+        toast.error("This movie has already been deleted.");
+
+      this.setState({ movies: originalMovies });
+    }
   };
 
   handleLike = (movie: Movie) => {
@@ -55,7 +70,7 @@ class Movies extends Component<Props, State> {
     this.setState({ currentPage: page });
   };
 
-  handleGenreSelect = (genre: any) => {
+  handleGenreSelect = (genre: Genre) => {
     this.setState({ selectedGenre: genre, currentPage: 1, searchQuery: "" });
   };
 

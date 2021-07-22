@@ -1,16 +1,16 @@
-import React from 'react';
-import { Column } from './tableHeader';
+import React from "react";
+import Column from "../../types/column";
 
 export interface TableBodyProps {
-  data: object[];
+  data: any[];
   columns: Column[];
 }
 
 export interface TableBodyState {}
 
 class TableBody extends React.Component<TableBodyProps, TableBodyState> {
-  getProperty = (item: object, path: string) => {
-    const paths = path.split('.');
+  getProperty = (item: any, path: string) => {
+    const paths = path.split(".");
 
     return paths.reduce((acc, next) => acc[next], item);
   };
